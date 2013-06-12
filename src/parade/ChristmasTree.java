@@ -1,5 +1,6 @@
 /* 
  * ChristmasTree - prints a cool christmas tree
+ * Copyright (C) 2013 Juhani Numminen
  * Copyright (C) 2013 Tuomas Numminen
  *
  * This program is free software: you can redistribute it and/or modify
@@ -18,37 +19,48 @@
 
 package parade;
 
+/**
+ * ChristmasTree provides utilities for creating ASCII art christmas trees.
+ */
 public class ChristmasTree {
 
-    private static void tulostaTahtia(int maara) {
-        while (maara > 0) {
-            System.out.print("*");
-            maara--;
-
+    private static String addStars(int number) {
+        String ret = "";
+        for (; number > 0; number--) {
+            ret += "*";
         }
-        System.out.println();
+        return ret + "\n";
     }
 
-    private static void tulostaTyhjaa(int maara) {
-        while (maara > 0) {
-            System.out.print(" ");
-            maara--;
+    private static String addSpaces(int number) {
+        String ret = "";
+        for (; number > 0; number--) {
+            ret += " ";
         }
+        return ret;
     }
 
-    public static void printTree(int korkeus) {
-        int i = 1;
-        while (i <= korkeus) {
-            tulostaTyhjaa(korkeus - i);
-            tulostaTahtia(2 * i - 1);
-            i++;
+    /**
+     * Creates a string containing a an isosceles triangle and a rectangle, a
+     * christmas tree.
+     * @param height the height including base.
+     * @return a string containing the tree.
+     */
+    public static String christmasTree(int height) {
+        String tree = "";
+        height -= 2;
+
+        for (int i = 1; i <= height; i++) {
+            tree += addSpaces(height - i);
+            tree += addStars(2 * i - 1);
         }
 
-        i = korkeus / 10;
-        tulostaTyhjaa(korkeus - i);
-        tulostaTahtia(2 * i - 1);
+        tree += addSpaces(height - 2);
+        tree += addStars(3);
 
-        tulostaTyhjaa(korkeus - i);
-        tulostaTahtia(2 * i - 1);
+        tree += addSpaces(height - 2);
+        tree += addStars(3);
+
+        return tree;
     }
 }
