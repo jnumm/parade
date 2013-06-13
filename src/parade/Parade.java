@@ -19,9 +19,18 @@
 
 package parade;
 
+import org.newdawn.slick.AppGameContainer;
+import org.newdawn.slick.SlickException;
+
 public class Parade {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws SlickException {
         ChristmasTree.printTree(30);
+        
+        DeathAndGloryGame game = new DeathAndGloryGame();
+
+        AppGameContainer application = new AppGameContainer(game);
+        application.setDisplayMode(600, 400, false);
+        application.start();
     }
 }
