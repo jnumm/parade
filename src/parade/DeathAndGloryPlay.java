@@ -31,6 +31,8 @@ public class DeathAndGloryPlay extends BasicGameState {
     private Character player;
     private Character enemy;
 
+    private MessageBox msgBox;
+
     public DeathAndGloryPlay(DeathAndGloryGame.State state) {
         this.state = state;
     }
@@ -46,6 +48,9 @@ public class DeathAndGloryPlay extends BasicGameState {
         enemy = new Character(100.0f, gc.getWidth() / 2.0f, 20.0f,
                 new Image("assets/img/orc.png"), 0);
 
+        msgBox = new MessageBox(0, gc.getHeight() - 110);
+        msgBox.addMessage("Welcome to Dungeon!");
+
         gc.setShowFPS(false);
         gc.setTargetFrameRate(60);
     }
@@ -54,6 +59,7 @@ public class DeathAndGloryPlay extends BasicGameState {
     public void render(GameContainer gc, StateBasedGame game, Graphics g) throws SlickException {
         player.render(g);
         enemy.render(g);
+        msgBox.render(g);
     }
 
     @Override
