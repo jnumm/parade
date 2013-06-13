@@ -21,6 +21,7 @@ package parade;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
+import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
@@ -60,5 +61,15 @@ public class DeathAndGloryPlay extends BasicGameState {
     public void update(GameContainer gc, StateBasedGame game, int msSinceLastUpdate) throws SlickException {
         player.updateArrowKeys(gc, msSinceLastUpdate);
         enemy.updateAI(gc, msSinceLastUpdate);
+
+        // check for collisions
+        if (player.getCollisionRect().intersects(enemy.getCollisionRect())) {
+            Input input  = gc.getInput();
+            System.out.println("osuu!!");
+            if (input.isKeyPressed(Input.KEY_SPACE)) {
+                player.battle(enemy);
+            }
+        }
+
     }
 }

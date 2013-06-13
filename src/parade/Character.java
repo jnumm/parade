@@ -1,6 +1,7 @@
 /* 
  * Character
  * Copyright (C) 2013 Juhani Numminen
+ * Copyright (C) 2013 Tuomas Numminen
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,6 +24,7 @@ import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
+import org.newdawn.slick.geom.Rectangle;
 
 /**
  * Game character that is able to move with its own AI or user's input.
@@ -77,6 +79,22 @@ class Character {
     public void setPosition(int newX, int newY) {
         x = newX;
         y = newY;
+    }
+
+    /**
+     * Returns a rectangle for collision check.
+     * @return Rectangle of Character's current position
+     */
+    public Rectangle getCollisionRect() {
+        return new Rectangle(x, y, 64, 64);
+    }
+
+    /**
+     * Starts battle.
+     * @param opponent character to fight with
+     */
+    public void battle(Character opponent) {
+        System.out.println("Battle begins!!");
     }
 
     /**
