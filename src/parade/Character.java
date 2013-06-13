@@ -36,14 +36,14 @@ class Character {
     private int exp;
     
     private int aiCounter;
+    private float aiMoveX;
+    private float aiMoveY;
 
     /**
      * Creates a new Character with the specified image.
      * @param img character's image
      */
     public Character(Image img) {
-        Random rnd = new Random();
-        
         speed = 200;
         x = 0;
         y = 0;
@@ -110,13 +110,18 @@ class Character {
      */
     public void updateAI(GameContainer gc, int msSinceLastUpdate) {
         if (aiCounter > 30) {
-            aiCounter = 0;
             Random rnd = new Random();
-
-            x += (rnd.nextFloat() - 0.5) * 15;
-            y += (rnd.nextFloat() - 0.5) * 10;
+            aiCounter = rnd.nextInt(10);
+            aiMoveX = (rnd.nextFloat() - 0.5f) * 11;
+            aiMoveY = (rnd.nextFloat() - 0.5f) * 10;
         }
-            
+        
+        x += aiMoveX;
+        y += aiMoveY;
+        
+        aiMoveX /= 2;
+        aiMoveY /= 2;
+        
         if (x < 0) {
             x = 0;
         } else if (x > gc.getWidth() - img.getWidth()) {
