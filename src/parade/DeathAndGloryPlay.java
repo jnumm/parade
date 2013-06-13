@@ -46,6 +46,7 @@ public class DeathAndGloryPlay extends BasicGameState {
         enemy = new Character(100.0f, gc.getWidth() / 2.0f, 20.0f,
                 new Image("assets/img/orc.png"), 0);
 
+        gc.setShowFPS(false);
         gc.setTargetFrameRate(60);
     }
 

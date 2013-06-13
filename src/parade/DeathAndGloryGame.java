@@ -40,7 +40,7 @@ public class DeathAndGloryGame extends StateBasedGame {
     }
 
     public DeathAndGloryGame() {
-        super("Runner");
+        super("Death And Glory");
 
         addState(new DeathAndGloryMenu(State.MENU));
         addState(new DeathAndGloryPlay(State.PLAY));

@@ -45,6 +45,7 @@ public class DeathAndGloryMenu extends BasicGameState {
     public void init(GameContainer gameContainer, StateBasedGame stateBasedGame) throws SlickException {
         menuBack = new Image("assets/img/menu.png");
         sound = new Sound("assets/audio/boss_theme.ogg") ;
+        gameContainer.setShowFPS(false);
         gameContainer.setTargetFrameRate(30);
     }
 
