@@ -22,6 +22,7 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
+import org.newdawn.slick.Sound;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 
@@ -29,6 +30,7 @@ public class DeathAndGloryMenu extends BasicGameState {
 
     private DeathAndGloryGame.State state;
     private Image menuBack;
+    private Sound sound;
 
     public DeathAndGloryMenu(DeathAndGloryGame.State state) {
         this.state = state;
@@ -42,12 +44,14 @@ public class DeathAndGloryMenu extends BasicGameState {
     @Override
     public void init(GameContainer gameContainer, StateBasedGame stateBasedGame) throws SlickException {
         menuBack = new Image("assets/img/menu.png");
+        sound = new Sound("assets/audio/boss_theme.ogg") ;
         gameContainer.setTargetFrameRate(30);
     }
 
     @Override
     public void render(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics g) throws SlickException {
         menuBack.draw(0, 0);
+        sound.loop(); 
     }
 
     @Override
