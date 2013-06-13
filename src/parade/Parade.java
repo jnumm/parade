@@ -30,7 +30,7 @@ public class Parade {
         DeathAndGloryGame game = new DeathAndGloryGame();
 
         AppGameContainer application = new AppGameContainer(game);
-        application.setDisplayMode(600, 400, false);
+        application.setDisplayMode(800, 600, false);
         application.start();
     }
 }
