@@ -31,12 +31,19 @@ import org.newdawn.slick.state.StateBasedGame;
 
 public class DeathAndGloryPlay extends BasicGameState {
 
+    public enum Enemy {
+        ORC,
+        TROLL;
+    }
+
     private DeathAndGloryGame.State state;
     private Character player;
     private ArrayList<Character> enemies;
     private Image gameBack;
 
     private MessageBox msgBox;
+
+    private Enemy enemyType;
 
     public DeathAndGloryPlay(DeathAndGloryGame.State state) {
         this.state = state;
@@ -58,6 +65,8 @@ public class DeathAndGloryPlay extends BasicGameState {
 
         msgBox = new MessageBox(0, gc.getHeight() - 110);
         msgBox.addMessage("Welcome to Dungeon.");
+
+        enemyType = Enemy.ORC;
 
         gc.setShowFPS(false);
         gc.setTargetFrameRate(60);
@@ -97,6 +106,9 @@ public class DeathAndGloryPlay extends BasicGameState {
                     if (!enemy.isAlive()) {
                         msgBox.addMessage("You have won " + enemy + ".");
                         killedEnemies.add(enemy);
+                    } else if (!player.isAlive()) {
+                        msgBox.addMessage("Game over. You have died.");
+                        msgBox.addMessage("Better luck next time!");
                     }
                 }
             }
@@ -106,9 +118,19 @@ public class DeathAndGloryPlay extends BasicGameState {
 
         Random rnd = new Random();
         if (enemies.size() < 5 && rnd.nextFloat() > 0.99) {
-            msgBox.addMessage("A wild Orc appears.");
-            enemies.add(new Character("Orc", 100, gc.getWidth() / 2 + (rnd.nextInt(600) - 300), rnd.nextInt(200),
-                new Image("assets/img/orc.png"), 100, 0));
+            if (enemyType == Enemy.ORC) {
+                msgBox.addMessage("A wild Orc appears.");
+                enemies.add(new Character("Orc", 100, gc.getWidth() / 2 + (rnd.nextInt(600) - 300), rnd.nextInt(200),
+                        new Image("assets/img/orc.png"), 100, 0));
+            } else if (enemyType == Enemy.TROLL) {
+                msgBox.addMessage("A wild Troll appears.");
+                enemies.add(new Character("Troll", 100, gc.getWidth() / 2 + (rnd.nextInt(600) - 300), rnd.nextInt(200),
+                        new Image("assets/img/troll.png"), 1000, 100 + rnd.nextInt(200)));
+            }
+        }
+        
+        if (player.getExp() >= 50) {
+            enemyType = Enemy.TROLL;
         }
     }
 }
