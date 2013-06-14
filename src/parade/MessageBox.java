@@ -44,7 +44,7 @@ public class MessageBox {
     }
 
     public void render(Graphics g) {
-        g.setColor(new Color(0x2B2825));
+        g.setColor(new Color(0x2B2825EE));
         g.fillRect(x, y, 300, 110);
         g.setColor(Color.white);
         
