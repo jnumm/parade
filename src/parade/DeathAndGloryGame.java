@@ -36,7 +36,11 @@ public class DeathAndGloryGame extends StateBasedGame {
         /**
          * The game is running.
          */
-        PLAY;
+        PLAY,
+        /**
+         * The game is in credits menu.
+         */
+        CREDITS;
     }
 
     public DeathAndGloryGame() {
@@ -44,6 +48,7 @@ public class DeathAndGloryGame extends StateBasedGame {
 
         addState(new DeathAndGloryMenu(State.MENU));
         addState(new DeathAndGloryPlay(State.PLAY));
+        addState(new DeathAndGloryCredits(State.CREDITS));
     }
 
     @Override

@@ -60,6 +60,8 @@ public class DeathAndGloryMenu extends BasicGameState {
         Input input = gameContainer.getInput();
         if (input.isKeyPressed(Input.KEY_SPACE)) {
             stateBasedGame.enterState(DeathAndGloryGame.State.PLAY.ordinal());
+        } else if (input.isKeyPressed(Input.KEY_C)) {
+            stateBasedGame.enterState(DeathAndGloryGame.State.CREDITS.ordinal());
         }
     }
 }
