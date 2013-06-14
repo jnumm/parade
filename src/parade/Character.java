@@ -48,8 +48,8 @@ class Character {
      */
     public Character(Image img) {
         speed = 200;
-        x = 0;
-        y = 0;
+        x = 355;
+        y = 525;
         this.img = img;
         health = 100;
         exp = 0;
