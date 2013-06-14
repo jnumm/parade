@@ -47,7 +47,7 @@ public class DeathAndGloryPlay extends BasicGameState {
     public void init(GameContainer gc, StateBasedGame game) throws SlickException {
         player = new Character(new Image("assets/img/hero.png"));
         enemy = new Character(100.0f, gc.getWidth() / 2.0f, 20.0f,
-                new Image("assets/img/orc.png"), 0);
+                new Image("assets/img/orc.png"), 100, 0);
 
         msgBox = new MessageBox(0, gc.getHeight() - 110);
         msgBox.addMessage("Welcome to Dungeon!");
@@ -73,6 +73,7 @@ public class DeathAndGloryPlay extends BasicGameState {
             Input input  = gc.getInput();
             System.out.println("osuu!!");
             if (input.isKeyPressed(Input.KEY_SPACE)) {
+                msgBox.addMessage("Battle begins!");
                 player.battle(enemy);
             }
         }

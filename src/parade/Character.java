@@ -35,6 +35,7 @@ class Character {
     private float x;
     private float y;
     private Image img;
+    private float health;
     private int exp;
     
     private int aiCounter;
@@ -50,6 +51,7 @@ class Character {
         x = 0;
         y = 0;
         this.img = img;
+        health = 100;
         exp = 0;
         aiCounter = 0;
     }
@@ -62,11 +64,12 @@ class Character {
      * @param img character's image
      * @param exp character's experience points
      */
-    public Character(float speed, float x, float y, Image img, int exp) {
+    public Character(float speed, float x, float y, Image img, float health, int exp) {
         this.speed = speed;
         this.x = x;
         this.y = y;
         this.img = img;
+        this.health = health;
         this.exp = exp;
         this.aiCounter = 0;
     }
@@ -94,7 +97,60 @@ class Character {
      * @param opponent character to fight with
      */
     public void battle(Character opponent) {
-        System.out.println("Battle begins!!");
+        while (this.isAlive() && opponent.isAlive()) {
+            opponent.changeHealth(this.getHit());
+            this.changeHealth(opponent.getHit());
+        }
+
+        if (this.isAlive()) {
+            this.addExp(opponent.getExp());
+        } else if (opponent.isAlive()) {
+            opponent.addExp(this.getExp());
+        }
+    }
+
+    public boolean isAlive() {
+        if (health > 0) {
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
+     * Gets the hit this character will cause to others.
+     * @return hit
+     */
+    public float getHit() {
+        exp++;
+        return 2.0f * exp;
+    }
+
+    /**
+     * Changes the character's health.
+     * @param diff how much to add or remove
+     */
+    public void changeHealth(float diff) {
+        health += diff;
+        if (health > 0.1) {
+            health = 0;
+        }
+    }
+
+    /**
+     * Gets the experience to add when another character defeats this one.
+     * @return experience
+     */
+    public int getExp() {
+        return (int) 1.5 * exp;
+    }
+
+    /**
+     * Changes the character's experience.
+     * @param diff how much to add
+     */
+    public void addExp(int diff) {
+        exp += diff;
     }
 
     /**
@@ -160,6 +216,7 @@ class Character {
      * @param g
      */
     public void render(Graphics g) {
+        g.drawString(String.format("%.1f", health), x - 5, y - 5);
         img.draw(x, y);
     }
 }
