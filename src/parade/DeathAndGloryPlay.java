@@ -81,7 +81,7 @@ public class DeathAndGloryPlay extends BasicGameState {
         }
         msgBox.render(g);
         g.drawString("Exp: " + player.getExp(), gc.getWidth() - 110, 20);
-        
+
     }
 
     @Override
@@ -92,17 +92,17 @@ public class DeathAndGloryPlay extends BasicGameState {
         }
 
         // check for collisions
-        Input input  = gc.getInput();
+        Input input = gc.getInput();
         Rectangle playerRectangle = player.getCollisionRect();
-        
+
         ArrayList<Character> killedEnemies = new ArrayList<Character>();
-        
+
         for (Character enemy : enemies) {
             if (playerRectangle.intersects(enemy.getCollisionRect())) {
                 if (input.isKeyPressed(Input.KEY_SPACE)) {
                     msgBox.addMessage("Battle begins.");
                     player.battle(enemy);
-                    
+
                     if (!enemy.isAlive()) {
                         msgBox.addMessage("You have won " + enemy + ".");
                         killedEnemies.add(enemy);
@@ -113,7 +113,7 @@ public class DeathAndGloryPlay extends BasicGameState {
                 }
             }
         }
-        
+
         enemies.removeAll(killedEnemies);
 
         Random rnd = new Random();
@@ -125,11 +125,15 @@ public class DeathAndGloryPlay extends BasicGameState {
             } else if (enemyType == Enemy.TROLL) {
                 msgBox.addMessage("A wild Troll appears.");
                 enemies.add(new Character("Troll", 100, gc.getWidth() / 2 + (rnd.nextInt(600) - 300), rnd.nextInt(200),
-                        new Image("assets/img/troll.png"), 1000, 100 + rnd.nextInt(200)));
+                        new Image("assets/img/troll.png"), 150, 100 + rnd.nextInt(200)));
+                enemies.add(new Character("Orc", 100, gc.getWidth() / 2 + (rnd.nextInt(600) - 300), rnd.nextInt(200),
+                        new Image("assets/img/orc.png"), 100, 0));
+                enemies.add(new Character("Orc", 100, gc.getWidth() / 2 + (rnd.nextInt(600) - 300), rnd.nextInt(200),
+                        new Image("assets/img/orc.png"), 100, 0));
             }
         }
-        
-        if (player.getExp() >= 50) {
+
+        if (player.getExp() >= 100) {
             enemyType = Enemy.TROLL;
         }
     }

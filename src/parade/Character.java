@@ -134,7 +134,9 @@ class Character {
      */
     public float getHit() {
         exp++;
-        return 1.05f * exp;
+        float hit = new Random().nextFloat() * 1.05f * exp;
+        System.out.println(hit);
+        return hit;
     }
 
     /**
@@ -153,7 +155,11 @@ class Character {
      * @return experience
      */
     public int getDefeatedExp() {
-        return (int) 1.5 * exp;
+        if (exp < 100) {
+            return (int) (1.1 * exp);
+        } else {
+            return (int) (0.8 * exp);
+        }
     }
 
     /**
