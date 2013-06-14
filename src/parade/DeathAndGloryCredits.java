@@ -33,6 +33,7 @@ public class DeathAndGloryCredits extends BasicGameState {
         {"Programming and Game Design", "Juhani Numminen"},
         {"Programming, Game Design & Graphics", "Tuomas Numminen"},
         {"Music", "\"Boss Theme\" by Remaxim"},
+        {"", "\"Safe Room Theme\" by Remaxim"}
     };
     private DeathAndGloryGame.State state;
     private Image bgImage;
@@ -52,7 +53,7 @@ public class DeathAndGloryCredits extends BasicGameState {
     @Override
     public void init(GameContainer gc, StateBasedGame game) throws SlickException {
         bgImage = new Image("assets/img/menu.png");
-        sound = new Sound("assets/audio/boss_theme.ogg");
+        sound = new Sound("assets/audio/safe_room_theme.ogg");
         
         x = 200;
         y = gc.getHeight();
