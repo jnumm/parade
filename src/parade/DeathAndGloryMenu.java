@@ -52,7 +52,7 @@ public class DeathAndGloryMenu extends BasicGameState {
     @Override
     public void render(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics g) throws SlickException {
         menuBack.draw(0, 0);
-        sound.loop(); 
+        sound.loop(1.0f, 0.5f);
     }
 
     @Override
