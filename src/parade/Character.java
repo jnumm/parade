@@ -31,6 +31,7 @@ import org.newdawn.slick.geom.Rectangle;
  */
 class Character {
     
+    private String name;
     private float speed;
     private float x;
     private float y;
@@ -47,6 +48,7 @@ class Character {
      * @param img character's image
      */
     public Character(Image img) {
+        name = "";
         speed = 200;
         x = 355;
         y = 525;
@@ -64,7 +66,8 @@ class Character {
      * @param img character's image
      * @param exp character's experience points
      */
-    public Character(float speed, float x, float y, Image img, float health, int exp) {
+    public Character(String name, float speed, float x, float y, Image img, float health, int exp) {
+        this.name = name;
         this.speed = speed;
         this.x = x;
         this.y = y;
@@ -72,6 +75,11 @@ class Character {
         this.health = health;
         this.exp = exp;
         this.aiCounter = 0;
+    }
+
+    @Override
+    public String toString() {
+        return name;
     }
 
     public void move(int deltaX, int deltaY) {
@@ -98,8 +106,11 @@ class Character {
      */
     public void battle(Character opponent) {
         while (this.isAlive() && opponent.isAlive()) {
-            opponent.changeHealth(this.getHit());
-            this.changeHealth(opponent.getHit());
+            opponent.changeHealth(-this.getHit());
+            if (!opponent.isAlive()) {
+                break;
+            }
+            this.changeHealth(-opponent.getHit());
         }
 
         if (this.isAlive()) {
@@ -123,7 +134,7 @@ class Character {
      */
     public float getHit() {
         exp++;
-        return 2.0f * exp;
+        return 1.05f * exp;
     }
 
     /**
@@ -132,7 +143,7 @@ class Character {
      */
     public void changeHealth(float diff) {
         health += diff;
-        if (health > 0.1) {
+        if (health < 0.1) {
             health = 0;
         }
     }
@@ -174,7 +185,11 @@ class Character {
         }
         if (input.isKeyDown(Input.KEY_RIGHT)) {
             x += diff;
-        }        
+        }
+
+        if (health < 100 && health != 0) {
+            health += 0.002 * exp;
+        }
     }
 
     /**
@@ -207,7 +222,11 @@ class Character {
         } else if (y > gc.getHeight() - img.getHeight()) {
             y = gc.getHeight() - img.getHeight();
         }
-        
+
+        if (health < 100 && health != 0) {
+            health += 0.001 * exp;
+        }
+
         aiCounter++;
     }
     
@@ -216,7 +235,9 @@ class Character {
      * @param g
      */
     public void render(Graphics g) {
-        g.drawString(String.format("%.1f", health), x - 5, y - 5);
-        img.draw(x, y);
+        if (isAlive()) {
+            g.drawString(String.format("%d", (int) health), x - 5, y - 5);
+            img.draw(x, y);
+        }
     }
 }

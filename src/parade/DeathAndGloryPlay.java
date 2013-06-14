@@ -18,11 +18,14 @@
 
 package parade;
 
+import java.util.ArrayList;
+import java.util.Random;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
+import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 
@@ -30,7 +33,7 @@ public class DeathAndGloryPlay extends BasicGameState {
 
     private DeathAndGloryGame.State state;
     private Character player;
-    private Character enemy;
+    private ArrayList<Character> enemies;
     private Image gameBack;
 
     private MessageBox msgBox;
@@ -46,13 +49,15 @@ public class DeathAndGloryPlay extends BasicGameState {
 
     @Override
     public void init(GameContainer gc, StateBasedGame game) throws SlickException {
-        player = new Character(new Image("assets/img/hero.png"));
-        enemy = new Character(100.0f, gc.getWidth() / 2.0f, 20.0f,
-                new Image("assets/img/orc.png"), 100, 0);
+        player = new Character("Hero", 100, 355, 525,
+                new Image("assets/img/hero.png"), 100, 10);
+        enemies = new ArrayList<Character>();
+        enemies.add(new Character("Orc", 100, gc.getWidth() / 2, 20,
+                new Image("assets/img/orc.png"), 100, 0));
         gameBack = new Image("assets/img/back.png");
 
         msgBox = new MessageBox(0, gc.getHeight() - 110);
-        msgBox.addMessage("Welcome to Dungeon!");
+        msgBox.addMessage("Welcome to Dungeon.");
 
         gc.setShowFPS(false);
         gc.setTargetFrameRate(60);
@@ -62,7 +67,9 @@ public class DeathAndGloryPlay extends BasicGameState {
     public void render(GameContainer gc, StateBasedGame game, Graphics g) throws SlickException {
         gameBack.draw(0, 0);
         player.render(g);
-        enemy.render(g);
+        for (Character enemy : enemies) {
+            enemy.render(g);
+        }
         msgBox.render(g);
         
     }
@@ -70,17 +77,37 @@ public class DeathAndGloryPlay extends BasicGameState {
     @Override
     public void update(GameContainer gc, StateBasedGame game, int msSinceLastUpdate) throws SlickException {
         player.updateArrowKeys(gc, msSinceLastUpdate);
-        enemy.updateAI(gc, msSinceLastUpdate);
-
-        // check for collisions
-        if (player.getCollisionRect().intersects(enemy.getCollisionRect())) {
-            Input input  = gc.getInput();
-            System.out.println("osuu!!");
-            if (input.isKeyPressed(Input.KEY_SPACE)) {
-                msgBox.addMessage("Battle begins!");
-                player.battle(enemy);
-            }
+        for (Character enemy : enemies) {
+            enemy.updateAI(gc, msSinceLastUpdate);
         }
 
+        // check for collisions
+        Input input  = gc.getInput();
+        Rectangle playerRectangle = player.getCollisionRect();
+        
+        ArrayList<Character> killedEnemies = new ArrayList<Character>();
+        
+        for (Character enemy : enemies) {
+            if (playerRectangle.intersects(enemy.getCollisionRect())) {
+                if (input.isKeyPressed(Input.KEY_SPACE)) {
+                    msgBox.addMessage("Battle begins.");
+                    player.battle(enemy);
+                    
+                    if (!enemy.isAlive()) {
+                        msgBox.addMessage("You have won " + enemy + ".");
+                        killedEnemies.add(enemy);
+                    }
+                }
+            }
+        }
+        
+        enemies.removeAll(killedEnemies);
+
+        Random rnd = new Random();
+        if (enemies.size() < 5 && rnd.nextFloat() > 0.99) {
+            msgBox.addMessage("A wild Orc appears.");
+            enemies.add(new Character("Orc", 100, gc.getWidth() / 2 + (rnd.nextInt(600) - 300), rnd.nextInt(200),
+                new Image("assets/img/orc.png"), 100, 0));
+        }
     }
 }
