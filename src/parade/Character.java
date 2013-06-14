@@ -114,9 +114,9 @@ class Character {
         }
 
         if (this.isAlive()) {
-            this.addExp(opponent.getExp());
+            this.addExp(opponent.getDefeatedExp());
         } else if (opponent.isAlive()) {
-            opponent.addExp(this.getExp());
+            opponent.addExp(this.getDefeatedExp());
         }
     }
 
@@ -152,8 +152,16 @@ class Character {
      * Gets the experience to add when another character defeats this one.
      * @return experience
      */
-    public int getExp() {
+    public int getDefeatedExp() {
         return (int) 1.5 * exp;
+    }
+
+    /**
+     * Gets the current experience.
+     * @return experience
+     */
+    public int getExp() {
+        return exp;
     }
 
     /**

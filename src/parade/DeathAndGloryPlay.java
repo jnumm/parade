@@ -71,6 +71,7 @@ public class DeathAndGloryPlay extends BasicGameState {
             enemy.render(g);
         }
         msgBox.render(g);
+        g.drawString("Exp: " + player.getExp(), gc.getWidth() - 110, 20);
         
     }
 
