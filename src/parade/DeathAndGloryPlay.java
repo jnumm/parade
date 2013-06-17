@@ -86,6 +86,11 @@ public class DeathAndGloryPlay extends BasicGameState {
 
     @Override
     public void update(GameContainer gc, StateBasedGame game, int msSinceLastUpdate) throws SlickException {
+        if (!player.isAlive()) {
+            msgBox.addMessage("Game over. You have died.");
+            msgBox.addMessage("Better luck next time!");
+        }
+
         player.updateArrowKeys(gc, msSinceLastUpdate);
         for (Character enemy : enemies) {
             enemy.updateAI(gc, msSinceLastUpdate);
@@ -98,18 +103,15 @@ public class DeathAndGloryPlay extends BasicGameState {
         ArrayList<Character> killedEnemies = new ArrayList<Character>();
 
         for (Character enemy : enemies) {
-            if (playerRectangle.intersects(enemy.getCollisionRect())) {
-                if (input.isKeyPressed(Input.KEY_SPACE)) {
-                    msgBox.addMessage("Battle begins.");
-                    player.battle(enemy);
+            if (!enemy.isAlive()) {
+                msgBox.addMessage("You have won " + enemy + ".");
+                killedEnemies.add(enemy);
+            }
 
-                    if (!enemy.isAlive()) {
-                        msgBox.addMessage("You have won " + enemy + ".");
-                        killedEnemies.add(enemy);
-                    } else if (!player.isAlive()) {
-                        msgBox.addMessage("Game over. You have died.");
-                        msgBox.addMessage("Better luck next time!");
-                    }
+            if (playerRectangle.intersects(enemy.getCollisionRect())) {
+                if (input.isKeyPressed(Input.KEY_SPACE) && !player.isInBattle()) {
+                    msgBox.addMessage("Battle begins.");
+                    player.startBattle(enemy);
                 }
             }
         }
