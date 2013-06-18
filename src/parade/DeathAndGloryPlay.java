@@ -32,8 +32,18 @@ import org.newdawn.slick.state.StateBasedGame;
 
 public class DeathAndGloryPlay extends BasicGameState {
 
+    /**
+     * Enemy types.
+     */
     public enum Enemy {
+
+        /**
+         * Orc, a weak green enemy.
+         */
         ORC,
+        /**
+         * Troll, watch out for these yellow monsters.
+         */
         TROLL;
     }
 
