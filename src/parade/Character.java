@@ -1,5 +1,5 @@
 /* 
- * Character
+ * Character - game character for Death and Glory
  * Copyright (C) 2013 Juhani Numminen
  * Copyright (C) 2013 Tuomas Numminen
  *
