@@ -43,26 +43,28 @@ public class DeathAndGloryMenu extends BasicGameState {
     }
 
     @Override
-    public void init(GameContainer gameContainer, StateBasedGame stateBasedGame) throws SlickException {
+    public void init(GameContainer gc, StateBasedGame game) throws SlickException {
         menuBack = new Image("assets/img/menu.png");
         sound = new Sound("assets/audio/boss_theme.ogg") ;
-        gameContainer.setShowFPS(false);
-        gameContainer.setTargetFrameRate(30);
+        gc.setShowFPS(false);
+        gc.setTargetFrameRate(30);
     }
 
     @Override
-    public void render(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics g) throws SlickException {
+    public void render(GameContainer gc, StateBasedGame game, Graphics g)
+            throws SlickException {
         menuBack.draw(0, 0);
         sound.loop(1.0f, 0.5f);
     }
 
     @Override
-    public void update(GameContainer gameContainer, StateBasedGame stateBasedGame, int msFromLastChange) throws SlickException {
-        Input input = gameContainer.getInput();
+    public void update(GameContainer gc, StateBasedGame game, int msFromLastChange)
+            throws SlickException {
+        Input input = gc.getInput();
         if (input.isKeyPressed(Input.KEY_SPACE)) {
-            stateBasedGame.enterState(DeathAndGloryGame.State.PLAY.ordinal());
+            game.enterState(DeathAndGloryGame.State.PLAY.ordinal());
         } else if (input.isKeyPressed(Input.KEY_C)) {
-            stateBasedGame.enterState(DeathAndGloryGame.State.CREDITS.ordinal());
+            game.enterState(DeathAndGloryGame.State.CREDITS.ordinal());
         }
     }
 }

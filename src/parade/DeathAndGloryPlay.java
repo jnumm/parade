@@ -88,7 +88,8 @@ public class DeathAndGloryPlay extends BasicGameState {
     }
 
     @Override
-    public void render(GameContainer gc, StateBasedGame game, Graphics g) throws SlickException {
+    public void render(GameContainer gc, StateBasedGame game, Graphics g)
+            throws SlickException {
         gameBack.draw(0, 0);
         player.render(g);
         for (Character enemy : enemies) {
@@ -100,7 +101,8 @@ public class DeathAndGloryPlay extends BasicGameState {
     }
 
     @Override
-    public void update(GameContainer gc, StateBasedGame game, int msSinceLastUpdate) throws SlickException {
+    public void update(GameContainer gc, StateBasedGame game, int msSinceLastUpdate)
+            throws SlickException {
         if (!player.isAlive()) {
             msgBox.addMessage("Game over. You have died.");
             msgBox.addMessage("Better luck next time!");
@@ -137,15 +139,19 @@ public class DeathAndGloryPlay extends BasicGameState {
         if (enemies.size() < 5 && rnd.nextFloat() > 0.99) {
             if (enemyType == Enemy.ORC) {
                 msgBox.addMessage("A wild Orc appears.");
-                enemies.add(new Character("Orc", 100, gc.getWidth() / 2 + (rnd.nextInt(600) - 300), rnd.nextInt(200),
+                enemies.add(new Character("Orc", 100, gc.getWidth() / 2 +
+                        (rnd.nextInt(600) - 300), rnd.nextInt(200),
                         imgOrc, 100, 0));
             } else if (enemyType == Enemy.TROLL) {
                 msgBox.addMessage("A wild Troll appears.");
-                enemies.add(new Character("Troll", 100, gc.getWidth() / 2 + (rnd.nextInt(600) - 300), rnd.nextInt(200),
+                enemies.add(new Character("Troll", 100, gc.getWidth() / 2 +
+                        (rnd.nextInt(600) - 300), rnd.nextInt(200),
                         imgTroll, 150, 100 + rnd.nextInt(200)));
-                enemies.add(new Character("Orc", 100, gc.getWidth() / 2 + (rnd.nextInt(600) - 300), rnd.nextInt(200),
+                enemies.add(new Character("Orc", 100, gc.getWidth() / 2 +
+                        (rnd.nextInt(600) - 300), rnd.nextInt(200),
                         imgOrc, 100, 0));
-                enemies.add(new Character("Orc", 100, gc.getWidth() / 2 + (rnd.nextInt(600) - 300), rnd.nextInt(200),
+                enemies.add(new Character("Orc", 100, gc.getWidth() / 2 +
+                        (rnd.nextInt(600) - 300), rnd.nextInt(200),
                         imgOrc, 100, 0));
             }
         }

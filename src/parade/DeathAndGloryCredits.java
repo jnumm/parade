@@ -64,7 +64,8 @@ public class DeathAndGloryCredits extends BasicGameState {
     }
 
     @Override
-    public void render(GameContainer gc, StateBasedGame game, Graphics g) throws SlickException {
+    public void render(GameContainer gc, StateBasedGame game, Graphics g)
+            throws SlickException {
         float tempY = y;
         sound.loop(1.0f, 0.5f);
         bgImage.draw(0, 0);
@@ -81,7 +82,8 @@ public class DeathAndGloryCredits extends BasicGameState {
     }
 
     @Override
-    public void update(GameContainer gc, StateBasedGame game, int msSinceLastUpdate) throws SlickException {
+    public void update(GameContainer gc, StateBasedGame game, int msSinceLastUpdate)
+            throws SlickException {
         float diff = 50 * msSinceLastUpdate / 1000;
         y -= diff;
 

@@ -70,7 +70,8 @@ class Character {
      * @param img character's image
      * @param exp character's experience points
      */
-    public Character(String name, float speed, float x, float y, Image img, float health, int exp) {
+    public Character(String name, float speed, float x, float y, Image img,
+            float health, int exp) {
         this.name = name;
         this.speed = speed;
         this.x = x;
