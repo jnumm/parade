@@ -50,6 +50,8 @@ public class DeathAndGloryPlay extends BasicGameState {
     private DeathAndGloryGame.State state;
     private Character player;
     private ArrayList<Character> enemies;
+    private Image imgOrc;
+    private Image imgTroll;
     private Image gameBack;
 
     private MessageBox msgBox;
@@ -70,8 +72,10 @@ public class DeathAndGloryPlay extends BasicGameState {
         player = new Character("Hero", 100, 355, 525,
                 new Image("assets/img/hero.png"), 100, 10);
         enemies = new ArrayList<Character>();
+        imgOrc = new Image("assets/img/orc.png");
+        imgTroll = new Image("assets/img/troll.png");
         enemies.add(new Character("Orc", 100, gc.getWidth() / 2, 20,
-                new Image("assets/img/orc.png"), 100, 0));
+                imgOrc, 100, 0));
         gameBack = new Image("assets/img/back.png");
 
         msgBox = new MessageBox(0, gc.getHeight() - 110);
@@ -134,15 +138,15 @@ public class DeathAndGloryPlay extends BasicGameState {
             if (enemyType == Enemy.ORC) {
                 msgBox.addMessage("A wild Orc appears.");
                 enemies.add(new Character("Orc", 100, gc.getWidth() / 2 + (rnd.nextInt(600) - 300), rnd.nextInt(200),
-                        new Image("assets/img/orc.png"), 100, 0));
+                        imgOrc, 100, 0));
             } else if (enemyType == Enemy.TROLL) {
                 msgBox.addMessage("A wild Troll appears.");
                 enemies.add(new Character("Troll", 100, gc.getWidth() / 2 + (rnd.nextInt(600) - 300), rnd.nextInt(200),
-                        new Image("assets/img/troll.png"), 150, 100 + rnd.nextInt(200)));
+                        imgTroll, 150, 100 + rnd.nextInt(200)));
                 enemies.add(new Character("Orc", 100, gc.getWidth() / 2 + (rnd.nextInt(600) - 300), rnd.nextInt(200),
-                        new Image("assets/img/orc.png"), 100, 0));
+                        imgOrc, 100, 0));
                 enemies.add(new Character("Orc", 100, gc.getWidth() / 2 + (rnd.nextInt(600) - 300), rnd.nextInt(200),
-                        new Image("assets/img/orc.png"), 100, 0));
+                        imgOrc, 100, 0));
             }
         }
 
