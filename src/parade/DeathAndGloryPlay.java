@@ -1,6 +1,7 @@
 /* 
  * DeathAndGloryPlay
  * Copyright (C) 2013 Juhani Numminen
+ * Copyright (C) 2013 Tuomas Numminen
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -31,14 +32,26 @@ import org.newdawn.slick.state.StateBasedGame;
 
 public class DeathAndGloryPlay extends BasicGameState {
 
+    /**
+     * Enemy types.
+     */
     public enum Enemy {
+
+        /**
+         * Orc, a weak green enemy.
+         */
         ORC,
+        /**
+         * Troll, watch out for these yellow monsters.
+         */
         TROLL;
     }
 
     private DeathAndGloryGame.State state;
     private Character player;
     private ArrayList<Character> enemies;
+    private Image imgOrc;
+    private Image imgTroll;
     private Image gameBack;
 
     private MessageBox msgBox;
@@ -59,8 +72,10 @@ public class DeathAndGloryPlay extends BasicGameState {
         player = new Character("Hero", 100, 355, 525,
                 new Image("assets/img/hero.png"), 100, 10);
         enemies = new ArrayList<Character>();
+        imgOrc = new Image("assets/img/orc.png");
+        imgTroll = new Image("assets/img/troll.png");
         enemies.add(new Character("Orc", 100, gc.getWidth() / 2, 20,
-                new Image("assets/img/orc.png"), 100, 0));
+                imgOrc, 100, 0));
         gameBack = new Image("assets/img/back.png");
 
         msgBox = new MessageBox(0, gc.getHeight() - 110);
@@ -86,6 +101,11 @@ public class DeathAndGloryPlay extends BasicGameState {
 
     @Override
     public void update(GameContainer gc, StateBasedGame game, int msSinceLastUpdate) throws SlickException {
+        if (!player.isAlive()) {
+            msgBox.addMessage("Game over. You have died.");
+            msgBox.addMessage("Better luck next time!");
+        }
+
         player.updateArrowKeys(gc, msSinceLastUpdate);
         for (Character enemy : enemies) {
             enemy.updateAI(gc, msSinceLastUpdate);
@@ -98,18 +118,15 @@ public class DeathAndGloryPlay extends BasicGameState {
         ArrayList<Character> killedEnemies = new ArrayList<Character>();
 
         for (Character enemy : enemies) {
-            if (playerRectangle.intersects(enemy.getCollisionRect())) {
-                if (input.isKeyPressed(Input.KEY_SPACE)) {
-                    msgBox.addMessage("Battle begins.");
-                    player.battle(enemy);
+            if (!enemy.isAlive()) {
+                msgBox.addMessage("You have won " + enemy + ".");
+                killedEnemies.add(enemy);
+            }
 
-                    if (!enemy.isAlive()) {
-                        msgBox.addMessage("You have won " + enemy + ".");
-                        killedEnemies.add(enemy);
-                    } else if (!player.isAlive()) {
-                        msgBox.addMessage("Game over. You have died.");
-                        msgBox.addMessage("Better luck next time!");
-                    }
+            if (playerRectangle.intersects(enemy.getCollisionRect())) {
+                if (input.isKeyPressed(Input.KEY_SPACE) && !player.isInBattle()) {
+                    msgBox.addMessage("Battle begins.");
+                    player.startBattle(enemy);
                 }
             }
         }
@@ -121,15 +138,15 @@ public class DeathAndGloryPlay extends BasicGameState {
             if (enemyType == Enemy.ORC) {
                 msgBox.addMessage("A wild Orc appears.");
                 enemies.add(new Character("Orc", 100, gc.getWidth() / 2 + (rnd.nextInt(600) - 300), rnd.nextInt(200),
-                        new Image("assets/img/orc.png"), 100, 0));
+                        imgOrc, 100, 0));
             } else if (enemyType == Enemy.TROLL) {
                 msgBox.addMessage("A wild Troll appears.");
                 enemies.add(new Character("Troll", 100, gc.getWidth() / 2 + (rnd.nextInt(600) - 300), rnd.nextInt(200),
-                        new Image("assets/img/troll.png"), 150, 100 + rnd.nextInt(200)));
+                        imgTroll, 150, 100 + rnd.nextInt(200)));
                 enemies.add(new Character("Orc", 100, gc.getWidth() / 2 + (rnd.nextInt(600) - 300), rnd.nextInt(200),
-                        new Image("assets/img/orc.png"), 100, 0));
+                        imgOrc, 100, 0));
                 enemies.add(new Character("Orc", 100, gc.getWidth() / 2 + (rnd.nextInt(600) - 300), rnd.nextInt(200),
-                        new Image("assets/img/orc.png"), 100, 0));
+                        imgOrc, 100, 0));
             }
         }
 

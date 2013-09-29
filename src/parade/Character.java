@@ -1,5 +1,5 @@
 /* 
- * Character
+ * Character - game character for Death and Glory
  * Copyright (C) 2013 Juhani Numminen
  * Copyright (C) 2013 Tuomas Numminen
  *
@@ -39,6 +39,10 @@ class Character {
     private float health;
     private int exp;
     
+    private boolean inBattle;
+    private Character opponent;
+    private int battleCounter;
+
     private int aiCounter;
     private float aiMoveX;
     private float aiMoveY;
@@ -104,20 +108,50 @@ class Character {
      * Starts battle.
      * @param opponent character to fight with
      */
-    public void battle(Character opponent) {
-        while (this.isAlive() && opponent.isAlive()) {
-            opponent.changeHealth(-this.getHit());
-            if (!opponent.isAlive()) {
-                break;
-            }
-            this.changeHealth(-opponent.getHit());
+    public void startBattle(Character opponent) {
+        if (!inBattle) {
+            inBattle = true;
+            this.opponent = opponent;
+        }
+    }
+
+    /**
+     * Updates the battle.
+     */
+    private void updateBattle() {
+        if (battleCounter < 5) {
+            battleCounter++;
+            return;
         }
 
-        if (this.isAlive()) {
+        battleCounter = 0;
+
+        if (this.isAlive() && opponent.isAlive()) {
+            opponent.changeHealth(-this.getHit());
+            if (!opponent.isAlive()) {
+                inBattle = false;
+                this.addExp(opponent.getDefeatedExp());
+            }
+            this.changeHealth(-opponent.getHit());
+            if (!this.isAlive()) {
+                inBattle = false;
+                opponent.addExp(opponent.getDefeatedExp());
+            }
+        } else if (!opponent.isAlive()) {
+            inBattle = false;
             this.addExp(opponent.getDefeatedExp());
-        } else if (opponent.isAlive()) {
+        } else if (!this.isAlive()) {
+            inBattle = false;
             opponent.addExp(this.getDefeatedExp());
         }
+    }
+
+    /**
+     * Checks is the character having a battle with another one.
+     * @return true if this character is in a battle, false otherwise
+     */
+    public boolean isInBattle() {
+        return inBattle;
     }
 
     public boolean isAlive() {
@@ -185,6 +219,10 @@ class Character {
      * @param msSinceLastUpdate for calculations
      */
     public void updateArrowKeys(GameContainer gc, int msSinceLastUpdate) {
+        if (inBattle) {
+            updateBattle();
+        }
+
         Input input = gc.getInput();
         float diff = speed * msSinceLastUpdate / 1000;
 
@@ -212,6 +250,10 @@ class Character {
      * @param msSinceLastUpdate for calculations
      */
     public void updateAI(GameContainer gc, int msSinceLastUpdate) {
+        if (inBattle) {
+            updateBattle();
+        }
+
         if (aiCounter > 30) {
             Random rnd = new Random();
             aiCounter = rnd.nextInt(10);
