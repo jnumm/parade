@@ -32,21 +32,6 @@ import org.newdawn.slick.state.StateBasedGame;
 
 public class DeathAndGloryPlay extends BasicGameState {
 
-    /**
-     * Enemy types.
-     */
-    public enum Enemy {
-
-        /**
-         * Orc, a weak green enemy.
-         */
-        ORC,
-        /**
-         * Troll, watch out for these yellow monsters.
-         */
-        TROLL;
-    }
-
     private DeathAndGloryGame.State state;
     private Character player;
     private ArrayList<Character> enemies;
@@ -74,8 +59,7 @@ public class DeathAndGloryPlay extends BasicGameState {
         enemies = new ArrayList<Character>();
         imgOrc = new Image("assets/img/orc.png");
         imgTroll = new Image("assets/img/troll.png");
-        enemies.add(new Character("Orc", 100, gc.getWidth() / 2, 20,
-                imgOrc, 100, 0));
+        enemies.add(new Character(Enemy.ORC, imgOrc));
         gameBack = new Image("assets/img/back.png");
 
         msgBox = new MessageBox(0, gc.getHeight() - 110);
@@ -139,20 +123,12 @@ public class DeathAndGloryPlay extends BasicGameState {
         if (enemies.size() < 5 && rnd.nextFloat() > 0.99) {
             if (enemyType == Enemy.ORC) {
                 msgBox.addMessage("A wild Orc appears.");
-                enemies.add(new Character("Orc", 100, gc.getWidth() / 2 +
-                        (rnd.nextInt(600) - 300), rnd.nextInt(200),
-                        imgOrc, 100, 0));
+                enemies.add(new Character(Enemy.ORC, imgOrc));
             } else if (enemyType == Enemy.TROLL) {
                 msgBox.addMessage("A wild Troll appears.");
-                enemies.add(new Character("Troll", 100, gc.getWidth() / 2 +
-                        (rnd.nextInt(600) - 300), rnd.nextInt(200),
-                        imgTroll, 150, 100 + rnd.nextInt(200)));
-                enemies.add(new Character("Orc", 100, gc.getWidth() / 2 +
-                        (rnd.nextInt(600) - 300), rnd.nextInt(200),
-                        imgOrc, 100, 0));
-                enemies.add(new Character("Orc", 100, gc.getWidth() / 2 +
-                        (rnd.nextInt(600) - 300), rnd.nextInt(200),
-                        imgOrc, 100, 0));
+                enemies.add(new Character(Enemy.TROLL, imgTroll));
+                enemies.add(new Character(Enemy.ORC, imgOrc));
+                enemies.add(new Character(Enemy.ORC, imgOrc));
             }
         }
 

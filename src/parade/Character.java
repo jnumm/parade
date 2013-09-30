@@ -48,17 +48,18 @@ class Character {
     private float aiMoveY;
 
     /**
-     * Creates a new Character with the specified image.
+     * Creates a new Character using the specified enemy type.
+     * @param enemyType the enemy type of the new Character
      * @param img character's image
      */
-    public Character(Image img) {
-        name = "";
-        speed = 200;
-        x = 355;
-        y = 525;
+    public Character(Enemy enemyType, Image img) {
+        name = enemyType.name;
+        speed = enemyType.speed;
+        x = new Random().nextInt(600);
+        y = new Random().nextInt(600);
         this.img = img;
-        health = 100;
-        exp = 0;
+        health = enemyType.health;
+        exp = enemyType.exp;
         aiCounter = 0;
     }
     
