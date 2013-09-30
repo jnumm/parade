@@ -119,8 +119,7 @@ public class DeathAndGloryPlay extends BasicGameState {
 
         enemies.removeAll(killedEnemies);
 
-        Random rnd = new Random();
-        if (enemies.size() < 5 && rnd.nextFloat() > 0.99) {
+        if (enemies.size() < 5 && Parade.r.nextFloat() > 0.99) {
             if (enemyType == Enemy.ORC) {
                 msgBox.addMessage("A wild Orc appears.");
                 enemies.add(new Character(Enemy.ORC, imgOrc));

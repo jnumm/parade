@@ -55,8 +55,8 @@ class Character {
     public Character(Enemy enemyType, Image img) {
         name = enemyType.name;
         speed = enemyType.speed;
-        x = new Random().nextInt(600);
-        y = new Random().nextInt(600);
+        x = Parade.r.nextInt(600);
+        y = Parade.r.nextInt(600);
         this.img = img;
         health = enemyType.health;
         exp = enemyType.exp;
@@ -170,7 +170,7 @@ class Character {
      */
     public float getHit() {
         exp++;
-        float hit = new Random().nextFloat() * 1.05f * exp;
+        float hit = Parade.r.nextFloat() * 1.05f * exp;
         System.out.println(hit);
         return hit;
     }
@@ -257,10 +257,9 @@ class Character {
         }
 
         if (aiCounter > 30) {
-            Random rnd = new Random();
-            aiCounter = rnd.nextInt(10);
-            aiMoveX = (rnd.nextFloat() - 0.5f) * 11;
-            aiMoveY = (rnd.nextFloat() - 0.5f) * 10;
+            aiCounter = Parade.r.nextInt(10);
+            aiMoveX = (Parade.r.nextFloat() - 0.5f) * 11;
+            aiMoveY = (Parade.r.nextFloat() - 0.5f) * 10;
         }
         
         x += aiMoveX;

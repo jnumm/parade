@@ -19,12 +19,17 @@
 
 package parade;
 
+import java.util.Random;
 import org.newdawn.slick.AppGameContainer;
 import org.newdawn.slick.SlickException;
 
 public class Parade {
 
+    public static Random r;
+
     public static void main(String[] args) throws SlickException {
+        r = new Random();
+
         System.out.println(ChristmasTree.christmasTree(10));
         
         DeathAndGloryGame game = new DeathAndGloryGame();
