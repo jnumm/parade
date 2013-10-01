@@ -110,7 +110,7 @@ public class DeathAndGloryPlay extends BasicGameState {
             }
 
             if (playerRectangle.intersects(enemy.getCollisionRect())) {
-                if (input.isKeyPressed(Input.KEY_SPACE) && !player.isInBattle()) {
+                if (input.isKeyDown(Input.KEY_SPACE) && !player.isInBattle()) {
                     msgBox.addMessage("Battle begins.");
                     player.startBattle(enemy);
                 }
