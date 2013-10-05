@@ -130,7 +130,7 @@ public class DeathAndGloryPlay extends BasicGameState {
             }
         }
 
-        if (player.getExp() >= 100) {
+        if (enemyType == Enemy.ORC && player.getExp() >= 175) {
             enemyType = Enemy.TROLL;
         }
     }
