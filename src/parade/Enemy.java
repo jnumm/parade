@@ -30,8 +30,11 @@ public enum Enemy {
     /**
      * Troll, watch out for these yellow monsters.
      */
-    TROLL("Troll", 90f, 150f, 100);
-
+    TROLL("Troll", 90f, 150f, 100),
+    /**
+     * Daemon, a satanic creature.
+     */
+    DAEMON("Daemon", 100f, 200f, 150);
     /** The user friedly name of this Enemy. */
     public final String name;
     /** The speed of this Enemy. */

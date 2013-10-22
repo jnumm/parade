@@ -36,6 +36,7 @@ public class DeathAndGloryPlay extends BasicGameState {
     private ArrayList<Character> enemies;
     private Image imgOrc;
     private Image imgTroll;
+    private Image imgDaemon;
     private Image gameBack;
 
     private MessageBox msgBox;
@@ -58,6 +59,7 @@ public class DeathAndGloryPlay extends BasicGameState {
         enemies = new ArrayList<Character>();
         imgOrc = new Image("assets/img/orc.png");
         imgTroll = new Image("assets/img/troll.png");
+        imgDaemon = new Image("assets/img/daemon2.png");
         enemies.add(new Character(Enemy.ORC, imgOrc));
         gameBack = new Image("assets/img/back.png");
 
@@ -127,11 +129,19 @@ public class DeathAndGloryPlay extends BasicGameState {
                 enemies.add(new Character(Enemy.TROLL, imgTroll));
                 enemies.add(new Character(Enemy.ORC, imgOrc));
                 enemies.add(new Character(Enemy.ORC, imgOrc));
+            } else if (enemyType == Enemy.DAEMON) {
+                msgBox.addMessage("Daemon appears");
+                enemies.add(new Character(Enemy.DAEMON, imgDaemon));
+                enemies.add(new Character(Enemy.ORC, imgOrc));
+                enemies.add(new Character(Enemy.ORC, imgOrc));
             }
         }
 
-        if (enemyType == Enemy.ORC && player.getExp() >= 175) {
+        int curExp = player.getExp();
+        if (enemyType == Enemy.ORC && curExp >= 175) {
             enemyType = Enemy.TROLL;
+        } else if (enemyType == Enemy.TROLL && curExp >= 250) {
+            enemyType = Enemy.DAEMON;
         }
     }
 }
